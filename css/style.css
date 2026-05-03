@@ -373,3 +373,5 @@ footer a:hover { opacity: 1; color: var(--renk-vurgu); }
   .carousel-item img { height: 250px; }
   .film-kart img { height: 220px; }
 }
+
+[v-cloak] { display: none; }

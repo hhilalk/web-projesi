@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>İletişim | Kişisel Web Sitem</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">&#9670; Hilal Karamanlı</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Hakkımda</a></li>
+          <li class="nav-item"><a class="nav-link" href="cv.html">CV</a></li>
+          <li class="nav-item"><a class="nav-link" href="sehrim.html">Şehrim</a></li>
+          <li class="nav-item"><a class="nav-link" href="miras.html">Mirasımız</a></li>
+          <li class="nav-item"><a class="nav-link" href="ilgi.html">İlgi Alanlarım</a></li>
+          <li class="nav-item"><a class="nav-link active" href="iletisim.html">İletişim</a></li>
+          <li class="nav-item"><a class="nav-link" href="login.html">Giriş</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== SAYFA BAŞLIĞI ========== -->
+  <div style="background:linear-gradient(135deg, var(--renk-koyu), var(--renk-lacivert)); color:white; padding:60px 0 40px;">
+    <div class="container">
+      <h1 class="bolum-baslik" style="color:white;">İletişim</h1>
+      <div class="bolum-cizgi"></div>
+      <p style="opacity:0.8;">Benimle iletişime geçin</p>
+    </div>
+  </div>
+
+  <main class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+
+        <div class="kart">
+          <p style="font-size:0.88rem; color:#888; margin-bottom:1.5rem;">
+            📌 <strong>Buton 1</strong> Native JavaScript ile doğrular &nbsp;|&nbsp; <strong>Buton 2</strong> Vue.js ile doğrular
+          </p>
+
+          <form id="iletisimForm" action="iletisim_islem.php" method="POST" novalidate>
+
+            <!-- Ad Soyad -->
+            <div class="mb-3">
+              <label class="form-label" for="adSoyad">Ad Soyad <span style="color:red;">*</span></label>
+              <input type="text" class="form-control" id="adSoyad" name="adSoyad" placeholder="Adınız ve soyadınız" />
+              <div class="hata-mesaj" id="hata-adSoyad"></div>
+              <div class="hata-mesaj" id="vue-hata-adSoyad"></div>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+              <label class="form-label" for="email">E-posta <span style="color:red;">*</span></label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="ornek@email.com" />
+              <div class="hata-mesaj" id="hata-email"></div>
+              <div class="hata-mesaj" id="vue-hata-email"></div>
+            </div>
+
+            <!-- Telefon -->
+            <div class="mb-3">
+              <label class="form-label" for="telefon">Telefon <span style="color:red;">*</span></label>
+              <input type="tel" class="form-control" id="telefon" name="telefon" placeholder="05XXXXXXXXX" />
+              <div class="hata-mesaj" id="hata-telefon"></div>
+              <div class="hata-mesaj" id="vue-hata-telefon"></div>
+            </div>
+
+            <!-- Konu -->
+            <div class="mb-3">
+              <label class="form-label" for="konu">Konu <span style="color:red;">*</span></label>
+              <select class="form-select" id="konu" name="konu">
+                <option value="">-- Konu Seçiniz --</option>
+                <option value="isbirligi">İş Birliği</option>
+                <option value="proje">Proje Teklifi</option>
+                <option value="bilgi">Bilgi Alma</option>
+                <option value="diger">Diğer</option>
+              </select>
+              <div class="hata-mesaj" id="hata-konu"></div>
+              <div class="hata-mesaj" id="vue-hata-konu"></div>
+            </div>
+
+            <!-- İletişim Tercihi -->
+            <div class="mb-3">
+              <label class="form-label">İletişim Tercihi <span style="color:red;">*</span></label>
+              <div class="d-flex gap-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="iletisimTercihi" id="tercihEmail" value="email" />
+                  <label class="form-check-label" for="tercihEmail">E-posta</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="iletisimTercihi" id="tercihTelefon" value="telefon" />
+                  <label class="form-check-label" for="tercihTelefon">Telefon</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="iletisimTercihi" id="tercihFark" value="farketmez" />
+                  <label class="form-check-label" for="tercihFark">Fark etmez</label>
+                </div>
+              </div>
+              <div class="hata-mesaj" id="hata-iletisimTercihi"></div>
+              <div class="hata-mesaj" id="vue-hata-iletisimTercihi"></div>
+            </div>
+
+            <!-- Mesaj -->
+            <div class="mb-3">
+              <label class="form-label" for="mesaj">Mesaj <span style="color:red;">*</span></label>
+              <textarea class="form-control" id="mesaj" name="mesaj" rows="5" placeholder="Mesajınızı buraya yazınız..."></textarea>
+              <div class="hata-mesaj" id="hata-mesaj"></div>
+              <div class="hata-mesaj" id="vue-hata-mesaj"></div>
+            </div>
+
+            <!-- KVKK -->
+            <div class="mb-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="kvkk" name="kvkk" />
+                <label class="form-check-label" for="kvkk">
+                  Kişisel verilerimin işlenmesine onay veriyorum. <span style="color:red;">*</span>
+                </label>
+              </div>
+              <div class="hata-mesaj" id="hata-kvkk"></div>
+              <div class="hata-mesaj" id="vue-hata-kvkk"></div>
+            </div>
+
+            <!-- BUTONLAR -->
+            <div class="d-flex gap-3 flex-wrap">
+              <button type="button" class="btn-ana" onclick="jsDogrula()">
+                ✅ Gönder (JavaScript)
+              </button>
+              <button type="button" class="btn-ana" style="background:var(--renk-yesil);" onclick="vueDogrula()">
+                ✅ Gönder (Vue.js)
+              </button>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer>
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <h6>Hilal Karamanlı</h6>
+          <p>Sakarya Üniversitesi<br>Bilgisayar Mühendisliği</p>
+        </div>
+        <div class="col-md-4">
+          <h6>Hızlı Bağlantılar</h6>
+          <ul class="list-unstyled">
+            <li><a href="index.html">Hakkımda</a></li>
+            <li><a href="sehrim.html">Şehrim - Ordu</a></li>
+            <li><a href="iletisim.html">İletişim</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h6>İletişim</h6>
+          <p>b25121XXXXX@sakarya.edu.tr</p>
+        </div>
+      </div>
+      <div class="footer-alt">
+        © 2026 Hilal Karamanlı — Web Teknolojileri Proje Ödevi
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- NATIVE JAVASCRIPT -->
+  <script>
+    function hataGoster(id, mesaj) {
+      document.getElementById('hata-' + id).textContent = mesaj;
+    }
+    function hataTemizle(id) {
+      document.getElementById('hata-' + id).textContent = '';
+    }
+    function tumJsHatalariTemizle() {
+      ['adSoyad','email','telefon','konu','iletisimTercihi','mesaj','kvkk'].forEach(hataTemizle);
+    }
+
+    function jsDogrula() {
+      tumJsHatalariTemizle();
+      let gecerli = true;
+
+      const adSoyad = document.getElementById('adSoyad').value.trim();
+      const email   = document.getElementById('email').value.trim();
+      const telefon = document.getElementById('telefon').value.trim();
+      const konu    = document.getElementById('konu').value;
+      const mesaj   = document.getElementById('mesaj').value.trim();
+      const kvkk    = document.getElementById('kvkk').checked;
+      const tercih  = document.querySelector('input[name="iletisimTercihi"]:checked');
+
+      if (!adSoyad) { hataGoster('adSoyad', 'Ad Soyad boş bırakılamaz.'); gecerli = false; }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email) { hataGoster('email', 'E-posta boş bırakılamaz.'); gecerli = false; }
+      else if (!emailRegex.test(email)) { hataGoster('email', 'Geçerli bir e-posta giriniz.'); gecerli = false; }
+
+      const telefonRegex = /^[0-9]{10,11}$/;
+      if (!telefon) { hataGoster('telefon', 'Telefon boş bırakılamaz.'); gecerli = false; }
+      else if (!telefonRegex.test(telefon)) { hataGoster('telefon', 'Telefon sadece rakam olmalı (10-11 hane).'); gecerli = false; }
+
+      if (!konu) { hataGoster('konu', 'Lütfen bir konu seçiniz.'); gecerli = false; }
+      if (!tercih) { hataGoster('iletisimTercihi', 'İletişim tercihi seçiniz.'); gecerli = false; }
+      if (!mesaj) { hataGoster('mesaj', 'Mesaj boş bırakılamaz.'); gecerli = false; }
+      if (!kvkk) { hataGoster('kvkk', 'KVKK onayı zorunludur.'); gecerli = false; }
+
+      if (gecerli) document.getElementById('iletisimForm').submit();
+    }
+  </script>
+
+  <!-- VUE.JS -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    function vueDogrula() {
+      const alanlar = ['adSoyad','email','telefon','konu','iletisimTercihi','mesaj','kvkk'];
+      alanlar.forEach(a => { document.getElementById('vue-hata-' + a).textContent = ''; });
+
+      let gecerli = true;
+
+      const adSoyad = document.getElementById('adSoyad').value.trim();
+      const email   = document.getElementById('email').value.trim();
+      const telefon = document.getElementById('telefon').value.trim();
+      const konu    = document.getElementById('konu').value;
+      const mesaj   = document.getElementById('mesaj').value.trim();
+      const kvkk    = document.getElementById('kvkk').checked;
+      const tercih  = document.querySelector('input[name="iletisimTercihi"]:checked');
+
+      if (!adSoyad) { document.getElementById('vue-hata-adSoyad').textContent = 'Ad Soyad boş bırakılamaz.'; gecerli = false; }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email) { document.getElementById('vue-hata-email').textContent = 'E-posta boş bırakılamaz.'; gecerli = false; }
+      else if (!emailRegex.test(email)) { document.getElementById('vue-hata-email').textContent = 'Geçerli bir e-posta giriniz.'; gecerli = false; }
+
+      const telefonRegex = /^[0-9]{10,11}$/;
+      if (!telefon) { document.getElementById('vue-hata-telefon').textContent = 'Telefon boş bırakılamaz.'; gecerli = false; }
+      else if (!telefonRegex.test(telefon)) { document.getElementById('vue-hata-telefon').textContent = 'Telefon sadece rakam olmalı (10-11 hane).'; gecerli = false; }
+
+      if (!konu) { document.getElementById('vue-hata-konu').textContent = 'Lütfen bir konu seçiniz.'; gecerli = false; }
+      if (!tercih) { document.getElementById('vue-hata-iletisimTercihi').textContent = 'İletişim tercihi seçiniz.'; gecerli = false; }
+      if (!mesaj) { document.getElementById('vue-hata-mesaj').textContent = 'Mesaj boş bırakılamaz.'; gecerli = false; }
+      if (!kvkk) { document.getElementById('vue-hata-kvkk').textContent = 'KVKK onayı zorunludur.'; gecerli = false; }
+
+      if (gecerli) document.getElementById('iletisimForm').submit();
+    }
+  </script>
+
+</body>
+</html>
