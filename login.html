@@ -128,6 +128,13 @@
       if (!sifre) {
         document.getElementById('hata-sifre').textContent = 'Şifre boş bırakılamaz.';
         gecerli = false;
+      } else {
+        // Öğrenci numarası formatı: b ile başlamalı, ardından rakamlar gelmeli
+        const sifreRegex = /^b\d+$/i;
+        if (!sifreRegex.test(sifre)) {
+          document.getElementById('hata-sifre').textContent = 'Şifre öğrenci numarası formatında olmalı (örn: b251210057).';
+          gecerli = false;
+        }
       }
 
       if (gecerli) {

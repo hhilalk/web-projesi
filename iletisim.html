@@ -39,45 +39,62 @@
     </div>
   </div>
 
-  <main class="container py-5">
+  <!--
+    Vue uygulaması bu div'i sarar.
+    v-cloak sayesinde Vue yüklenene kadar içerik gizlenir.
+  -->
+  <main class="container py-5" id="vueApp" v-cloak>
     <div class="row justify-content-center">
       <div class="col-lg-8">
 
         <div class="kart">
           <p style="font-size:0.88rem; color:#888; margin-bottom:1.5rem;">
-            📌 <strong>Buton 1</strong> Native JavaScript ile doğrular &nbsp;|&nbsp; <strong>Buton 2</strong> Vue.js ile doğrular
+             <strong>Buton 1</strong> Native JavaScript ile doğrular &nbsp;|&nbsp;
+            <strong>Buton 2</strong> Vue.js (Composition API) ile doğrular
           </p>
 
+          <!--
+            action/method: PHP'ye gönderim için korundu.
+            Vue, formu doğruladıktan sonra .submit() ile gönderir.
+          -->
           <form id="iletisimForm" action="iletisim_islem.php" method="POST" novalidate>
 
             <!-- Ad Soyad -->
             <div class="mb-3">
               <label class="form-label" for="adSoyad">Ad Soyad <span style="color:red;">*</span></label>
-              <input type="text" class="form-control" id="adSoyad" name="adSoyad" placeholder="Adınız ve soyadınız" />
+              <input type="text" class="form-control" id="adSoyad" name="adSoyad"
+                placeholder="Adınız ve soyadınız"
+                v-model="form.adSoyad" />
+              <!-- Native JS hata alanı -->
               <div class="hata-mesaj" id="hata-adSoyad"></div>
-              <div class="hata-mesaj" id="vue-hata-adSoyad"></div>
+              <!-- Vue hata alanı — reactive -->
+              <div class="hata-mesaj" v-if="vueHatalar.adSoyad">{{ vueHatalar.adSoyad }}</div>
             </div>
 
             <!-- Email -->
             <div class="mb-3">
               <label class="form-label" for="email">E-posta <span style="color:red;">*</span></label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="ornek@email.com" />
+              <input type="email" class="form-control" id="email" name="email"
+                placeholder="ornek@email.com"
+                v-model="form.email" />
               <div class="hata-mesaj" id="hata-email"></div>
-              <div class="hata-mesaj" id="vue-hata-email"></div>
+              <div class="hata-mesaj" v-if="vueHatalar.email">{{ vueHatalar.email }}</div>
             </div>
 
             <!-- Telefon -->
             <div class="mb-3">
               <label class="form-label" for="telefon">Telefon <span style="color:red;">*</span></label>
-              <input type="tel" class="form-control" id="telefon" name="telefon" placeholder="05XXXXXXXXX" />
+              <input type="tel" class="form-control" id="telefon" name="telefon"
+                placeholder="05XXXXXXXXX"
+                v-model="form.telefon" />
               <div class="hata-mesaj" id="hata-telefon"></div>
-              <div class="hata-mesaj" id="vue-hata-telefon"></div>
+              <div class="hata-mesaj" v-if="vueHatalar.telefon">{{ vueHatalar.telefon }}</div>
             </div>
 
             <!-- Konu -->
             <div class="mb-3">
               <label class="form-label" for="konu">Konu <span style="color:red;">*</span></label>
-              <select class="form-select" id="konu" name="konu">
+              <select class="form-select" id="konu" name="konu" v-model="form.konu">
                 <option value="">-- Konu Seçiniz --</option>
                 <option value="isbirligi">İş Birliği</option>
                 <option value="proje">Proje Teklifi</option>
@@ -85,7 +102,7 @@
                 <option value="diger">Diğer</option>
               </select>
               <div class="hata-mesaj" id="hata-konu"></div>
-              <div class="hata-mesaj" id="vue-hata-konu"></div>
+              <div class="hata-mesaj" v-if="vueHatalar.konu">{{ vueHatalar.konu }}</div>
             </div>
 
             <!-- İletişim Tercihi -->
@@ -93,49 +110,58 @@
               <label class="form-label">İletişim Tercihi <span style="color:red;">*</span></label>
               <div class="d-flex gap-4">
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="iletisimTercihi" id="tercihEmail" value="email" />
+                  <input class="form-check-input" type="radio" name="iletisimTercihi"
+                    id="tercihEmail" value="email" v-model="form.iletisimTercihi" />
                   <label class="form-check-label" for="tercihEmail">E-posta</label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="iletisimTercihi" id="tercihTelefon" value="telefon" />
+                  <input class="form-check-input" type="radio" name="iletisimTercihi"
+                    id="tercihTelefon" value="telefon" v-model="form.iletisimTercihi" />
                   <label class="form-check-label" for="tercihTelefon">Telefon</label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="iletisimTercihi" id="tercihFark" value="farketmez" />
+                  <input class="form-check-input" type="radio" name="iletisimTercihi"
+                    id="tercihFark" value="farketmez" v-model="form.iletisimTercihi" />
                   <label class="form-check-label" for="tercihFark">Fark etmez</label>
                 </div>
               </div>
               <div class="hata-mesaj" id="hata-iletisimTercihi"></div>
-              <div class="hata-mesaj" id="vue-hata-iletisimTercihi"></div>
+              <div class="hata-mesaj" v-if="vueHatalar.iletisimTercihi">{{ vueHatalar.iletisimTercihi }}</div>
             </div>
 
             <!-- Mesaj -->
             <div class="mb-3">
               <label class="form-label" for="mesaj">Mesaj <span style="color:red;">*</span></label>
-              <textarea class="form-control" id="mesaj" name="mesaj" rows="5" placeholder="Mesajınızı buraya yazınız..."></textarea>
+              <textarea class="form-control" id="mesaj" name="mesaj" rows="5"
+                placeholder="Mesajınızı buraya yazınız..."
+                v-model="form.mesaj"></textarea>
               <div class="hata-mesaj" id="hata-mesaj"></div>
-              <div class="hata-mesaj" id="vue-hata-mesaj"></div>
+              <div class="hata-mesaj" v-if="vueHatalar.mesaj">{{ vueHatalar.mesaj }}</div>
             </div>
 
             <!-- KVKK -->
             <div class="mb-4">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="kvkk" name="kvkk" />
+                <input class="form-check-input" type="checkbox" id="kvkk" name="kvkk"
+                  v-model="form.kvkk" />
                 <label class="form-check-label" for="kvkk">
                   Kişisel verilerimin işlenmesine onay veriyorum. <span style="color:red;">*</span>
                 </label>
               </div>
               <div class="hata-mesaj" id="hata-kvkk"></div>
-              <div class="hata-mesaj" id="vue-hata-kvkk"></div>
+              <div class="hata-mesaj" v-if="vueHatalar.kvkk">{{ vueHatalar.kvkk }}</div>
             </div>
 
             <!-- BUTONLAR -->
             <div class="d-flex gap-3 flex-wrap">
+              <!-- Buton 1: Native JavaScript -->
               <button type="button" class="btn-ana" onclick="jsDogrula()">
-                ✅ Gönder (JavaScript)
+                 Gönder (JavaScript)
               </button>
-              <button type="button" class="btn-ana" style="background:var(--renk-yesil);" onclick="vueDogrula()">
-                ✅ Gönder (Vue.js)
+              <!-- Buton 2: Vue.js Composition API -->
+              <button type="button" class="btn-ana" style="background:var(--renk-yesil);"
+                @click="vueDogrula">
+                 Gönder (Vue.js)
               </button>
             </div>
 
@@ -175,7 +201,9 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- NATIVE JAVASCRIPT -->
+  <!-- ==========================================
+       BUTON 1 — NATIVE JAVASCRIPT DOĞRULAMA
+       ========================================== -->
   <script>
     function hataGoster(id, mesaj) {
       document.getElementById('hata-' + id).textContent = mesaj;
@@ -199,59 +227,137 @@
       const kvkk    = document.getElementById('kvkk').checked;
       const tercih  = document.querySelector('input[name="iletisimTercihi"]:checked');
 
-      if (!adSoyad) { hataGoster('adSoyad', 'Ad Soyad boş bırakılamaz.'); gecerli = false; }
+      if (!adSoyad) {
+        hataGoster('adSoyad', 'Ad Soyad boş bırakılamaz.');
+        gecerli = false;
+      }
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!email) { hataGoster('email', 'E-posta boş bırakılamaz.'); gecerli = false; }
-      else if (!emailRegex.test(email)) { hataGoster('email', 'Geçerli bir e-posta giriniz.'); gecerli = false; }
+      if (!email) {
+        hataGoster('email', 'E-posta boş bırakılamaz.');
+        gecerli = false;
+      } else if (!emailRegex.test(email)) {
+        hataGoster('email', 'Geçerli bir e-posta giriniz.');
+        gecerli = false;
+      }
 
       const telefonRegex = /^[0-9]{10,11}$/;
-      if (!telefon) { hataGoster('telefon', 'Telefon boş bırakılamaz.'); gecerli = false; }
-      else if (!telefonRegex.test(telefon)) { hataGoster('telefon', 'Telefon sadece rakam olmalı (10-11 hane).'); gecerli = false; }
+      if (!telefon) {
+        hataGoster('telefon', 'Telefon boş bırakılamaz.');
+        gecerli = false;
+      } else if (!telefonRegex.test(telefon)) {
+        hataGoster('telefon', 'Telefon sadece rakam olmalı (10-11 hane).');
+        gecerli = false;
+      }
 
-      if (!konu) { hataGoster('konu', 'Lütfen bir konu seçiniz.'); gecerli = false; }
+      if (!konu)   { hataGoster('konu', 'Lütfen bir konu seçiniz.'); gecerli = false; }
       if (!tercih) { hataGoster('iletisimTercihi', 'İletişim tercihi seçiniz.'); gecerli = false; }
-      if (!mesaj) { hataGoster('mesaj', 'Mesaj boş bırakılamaz.'); gecerli = false; }
-      if (!kvkk) { hataGoster('kvkk', 'KVKK onayı zorunludur.'); gecerli = false; }
+      if (!mesaj)  { hataGoster('mesaj', 'Mesaj boş bırakılamaz.'); gecerli = false; }
+      if (!kvkk)   { hataGoster('kvkk', 'KVKK onayı zorunludur.'); gecerli = false; }
 
       if (gecerli) document.getElementById('iletisimForm').submit();
     }
   </script>
 
-  <!-- VUE.JS -->
+  <!-- ==========================================
+       BUTON 2 — VUE.JS 3 COMPOSITION API
+       ==========================================
+       form verileri Vue reactive state'inde tutulur.
+       v-model ile input'lar iki yönlü bağlanır.
+       vueHatalar reactive objesi hataları tutar ve
+       template içinde {{ }} ile otomatik güncellenir.
+  -->
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script>
-    function vueDogrula() {
-      const alanlar = ['adSoyad','email','telefon','konu','iletisimTercihi','mesaj','kvkk'];
-      alanlar.forEach(a => { document.getElementById('vue-hata-' + a).textContent = ''; });
+    const { createApp, ref, reactive } = Vue;
 
-      let gecerli = true;
+    createApp({
+      setup() {
+        // Tüm form alanları reactive state'te — v-model ile bağlı
+        const form = reactive({
+          adSoyad:          '',
+          email:            '',
+          telefon:          '',
+          konu:             '',
+          iletisimTercihi:  '',
+          mesaj:            '',
+          kvkk:             false
+        });
 
-      const adSoyad = document.getElementById('adSoyad').value.trim();
-      const email   = document.getElementById('email').value.trim();
-      const telefon = document.getElementById('telefon').value.trim();
-      const konu    = document.getElementById('konu').value;
-      const mesaj   = document.getElementById('mesaj').value.trim();
-      const kvkk    = document.getElementById('kvkk').checked;
-      const tercih  = document.querySelector('input[name="iletisimTercihi"]:checked');
+        // Hata mesajları reactive — template'de v-if ile gösterilir
+        const vueHatalar = reactive({
+          adSoyad:         '',
+          email:           '',
+          telefon:         '',
+          konu:            '',
+          iletisimTercihi: '',
+          mesaj:           '',
+          kvkk:            ''
+        });
 
-      if (!adSoyad) { document.getElementById('vue-hata-adSoyad').textContent = 'Ad Soyad boş bırakılamaz.'; gecerli = false; }
+        // Tüm Vue hatalarını temizle
+        function hatalariTemizle() {
+          Object.keys(vueHatalar).forEach(k => vueHatalar[k] = '');
+        }
 
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!email) { document.getElementById('vue-hata-email').textContent = 'E-posta boş bırakılamaz.'; gecerli = false; }
-      else if (!emailRegex.test(email)) { document.getElementById('vue-hata-email').textContent = 'Geçerli bir e-posta giriniz.'; gecerli = false; }
+        // Vue doğrulama fonksiyonu
+        function vueDogrula() {
+          hatalariTemizle();
+          let gecerli = true;
 
-      const telefonRegex = /^[0-9]{10,11}$/;
-      if (!telefon) { document.getElementById('vue-hata-telefon').textContent = 'Telefon boş bırakılamaz.'; gecerli = false; }
-      else if (!telefonRegex.test(telefon)) { document.getElementById('vue-hata-telefon').textContent = 'Telefon sadece rakam olmalı (10-11 hane).'; gecerli = false; }
+          if (!form.adSoyad.trim()) {
+            vueHatalar.adSoyad = 'Ad Soyad boş bırakılamaz.';
+            gecerli = false;
+          }
 
-      if (!konu) { document.getElementById('vue-hata-konu').textContent = 'Lütfen bir konu seçiniz.'; gecerli = false; }
-      if (!tercih) { document.getElementById('vue-hata-iletisimTercihi').textContent = 'İletişim tercihi seçiniz.'; gecerli = false; }
-      if (!mesaj) { document.getElementById('vue-hata-mesaj').textContent = 'Mesaj boş bırakılamaz.'; gecerli = false; }
-      if (!kvkk) { document.getElementById('vue-hata-kvkk').textContent = 'KVKK onayı zorunludur.'; gecerli = false; }
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!form.email.trim()) {
+            vueHatalar.email = 'E-posta boş bırakılamaz.';
+            gecerli = false;
+          } else if (!emailRegex.test(form.email.trim())) {
+            vueHatalar.email = 'Geçerli bir e-posta giriniz.';
+            gecerli = false;
+          }
 
-      if (gecerli) document.getElementById('iletisimForm').submit();
-    }
+          const telefonRegex = /^[0-9]{10,11}$/;
+          if (!form.telefon.trim()) {
+            vueHatalar.telefon = 'Telefon boş bırakılamaz.';
+            gecerli = false;
+          } else if (!telefonRegex.test(form.telefon.trim())) {
+            vueHatalar.telefon = 'Telefon sadece rakam olmalı (10-11 hane).';
+            gecerli = false;
+          }
+
+          if (!form.konu) {
+            vueHatalar.konu = 'Lütfen bir konu seçiniz.';
+            gecerli = false;
+          }
+
+          if (!form.iletisimTercihi) {
+            vueHatalar.iletisimTercihi = 'İletişim tercihi seçiniz.';
+            gecerli = false;
+          }
+
+          if (!form.mesaj.trim()) {
+            vueHatalar.mesaj = 'Mesaj boş bırakılamaz.';
+            gecerli = false;
+          }
+
+          if (!form.kvkk) {
+            vueHatalar.kvkk = 'KVKK onayı zorunludur.';
+            gecerli = false;
+          }
+
+          // Tüm alanlar geçerliyse formu PHP'ye gönder
+          if (gecerli) {
+            document.getElementById('iletisimForm').submit();
+          }
+        }
+
+        // template'e aç
+        return { form, vueHatalar, vueDogrula };
+      }
+    }).mount('#vueApp');
   </script>
 
 </body>
